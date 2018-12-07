@@ -1,0 +1,40 @@
+@charset "ISO-8859-1";
+
+
+    .textbox {
+        border: 1px solid #DBE1EB;
+        border-left-color: white;
+        border-top-color: white;
+        border-right-color: white;
+        
+    }
+
+        .textbox:focus {
+            outline: none;
+        }
+
+
+    .cbo {
+        border-top-color: white;
+        border-right-color: white;
+        border-left-color: white;
+        /*padding-right: 110px;*/
+        padding-top: 4px;
+       
+    }
+      .cbo:focus {
+            outline: none;
+        }
+    
+     .textbox1 {
+        border: 1px solid #DBE1EB !important;
+        border-left-color: white !important;
+        border-top-color: white !important;
+        border-right-color: white !important;
+        
+    }
+
+        .textbox1:focus {
+            outline: none !important;
+        }
+    
