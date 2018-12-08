@@ -74,7 +74,7 @@
                             <!-- The user image in the navbar-->
                           <!--   <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
                             <!-- NOMBRE DE USUARIO -->
-                           
+                          
                          <!--  <p:messages autoUpdate="false" showDetail="true" showSummary="true"/> --> 
                           	
                             

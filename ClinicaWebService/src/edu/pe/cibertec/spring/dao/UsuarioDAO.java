@@ -1,101 +1,107 @@
 package edu.pe.cibertec.spring.dao;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.Query;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import edu.pe.cibertec.spring.model.UsuarioBean;
-import edu.pe.cibertec.spring.util.ConexionDB;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.StatementImpl;
+
+import edu.pe.cibertec.spring.model.Usuario;
+
 
 
 @Repository
 public class UsuarioDAO {
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+ 
+	
+//	
+//	public List getAllPersons() {
+//		Session session = this.sessionFactory.getCurrentSession();
+//		List personList = session.createQuery("from Usuario").list();
+//		return personList;
+//	}
+// 
+	
 
-	private ConexionDB cnx;
-
-	public ConexionDB getCnx() {
-		return cnx;
+ 
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
 
-	public UsuarioDAO() {
-		this.cnx = new ConexionDB();
+
+	@Autowired(required=true)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+
+
+	public Usuario addUsuario(Usuario usuario) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.persist(usuario);
+	
+		return usuario;
 	}
 	
-	public UsuarioBean insertarUsuario(UsuarioBean objusuario) {
-		
-	UsuarioBean result = null;
-		
-		Connection cn = cnx.getConexion();
-		//codigo para llamar a un SP de mysql: sp_insertar_usuario
+	
+	public Usuario validarLogin(Usuario usuario) {
+		Session session = sessionFactory.openSession();
+		Criteria criteria = null;
+		Usuario emp = null;
 		try {
-			CallableStatement cs = cn.prepareCall("{call sp_usuarioinsertar(?,?,?,?,?)}");
-			int i=1;
-			cs.setString(i++,objusuario.getEMAIL());
-			cs.setString(i++,objusuario.getPASSWORD());
-			cs.setString(i++,objusuario.getNOMBRE());
-			cs.setString(i++,objusuario.getUSUARIO());
-			cs.setInt(i++,objusuario.getROLESID());
+			criteria = session.createCriteria(Usuario.class);
+			Criterion criterion = Restrictions.eq("usuario",usuario.getUsuario()),
+						criterion2 = Restrictions.eq("password", usuario.getPassword());
+			//Criterion	criterion=Restrictions.eqProperty(usuario.getUsuario(), usuario.getPassword());
 			
-			//devuelve la cantidad de registro afectados
-			int cant = cs.executeUpdate(); 
-			if(cant == 0) {
-				result = null;
-			}else {
-				result = objusuario;
-			}
+			criteria.add(criterion);
+			criteria.add(criterion2);
+			criteria.setMaxResults(1);
+			emp = (Usuario) criteria.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			result = null;
-		}finally {
-			try {
-				cn.close();
-			}catch (SQLException e) {
-				e.printStackTrace();
-				result = null;
+		} finally {
+			if (session != null) {
+				session.close();
 			}
 		}
-		return result;
-	}
+		return emp;
 	
-	public List<UsuarioBean> listarAll(){
-		List<UsuarioBean> lista = new ArrayList<UsuarioBean>();
-		Connection cn = cnx.getConexion();
 		
-		try {
-			CallableStatement cs = cn.prepareCall("{call sp_listarUsuarios()}");
-			ResultSet rs = cs.executeQuery();
-			
-			while(rs.next()) {
-				UsuarioBean usuario = new UsuarioBean();
-				usuario.setUSUARIOID(rs.getInt(1));
-				usuario.setEMAIL(rs.getString(2));
-				usuario.setPASSWORD(rs.getString(3));
-				usuario.setNOMBRE(rs.getString(4));
-				usuario.setUSUARIO(rs.getString(5));
-				usuario.setUSUARIOID(rs.getInt(6));
-				
-				lista.add(usuario);
-			}
-			rs.close();
-			cs.close();
-			cn.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lista;
-	}
+		
+		
+		
+		
+
+//String query = "Select count(1) from user where username = ? and password = ?";  
+//        PreparedStatement pstmt = (PreparedStatement) ((PreparedStatement) ( sessionFactory)).getConnection().prepareStatement(query); 
+//        pstmt.setString(1, usuario); 
+//        pstmt.setString(2, password); 
+//        ResultSet resultSet = pstmt.executeQuery(); 
+//        if(resultSet.next()) 
+//            return (resultSet.getInt(1) > 0); 
+//        else 
+//           return false; 
+      }
+
+
 	
-	
-	
-	
-	
-	
+
+		
 	
 	
 }

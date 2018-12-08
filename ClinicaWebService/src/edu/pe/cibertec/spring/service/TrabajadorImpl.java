@@ -22,7 +22,6 @@ private TrabajadorDAO trabajadorDAO;
 	@Override
 	@Transactional
 	
-
 	public void insertarTrabajador(Trabajador p) throws Exception {
 		// TODO Auto-generated method stub
 		trabajadorDAO.insertarTrabajador(p);

@@ -40,23 +40,28 @@ color: red;
                     <div id="wrapper">
                              
                         <div style="width: 350px; " id="login" class="animate form">
-                        <form id="login-form"  role="form" style="display: block;">
-									
+<%--                         <form id="login-form"  role="form" style="display: block;"> --%>
+							<form:form method="post" modelAttribute="usuario"  id="login-form"  role="form" style="display: block;"
+		                               action="/ClinicaWebService/login">		
                            
                              <h1>Iniciar Sesión</h1>
-                         
+                         <center><h4 style="color:red;" >${msj} </h4></center>
                               
                                 <p>
                                     <label for="username" class="uname" >Usuario </label>
-                                    <input data-rule-required="true"   class="textbox1" name="username" id="username" tabindex="1" required="required" type="text" placeholder="Ingresa tu Usuario" />
-                                  
+<!--                                     <input data-rule-required="true"   class="textbox1" name="username" id="username" tabindex="1" required="required" type="text" placeholder="Ingresa tu Usuario" /> -->
+                                  <form:input path="usuario" data-rule-required="true"   class="textbox1" name="username" id="username" tabindex="1" required="required" type="text" placeholder="Ingresa tu Usuario"></form:input>
                                     
                                 </p>
                                 <p>
                                     <label for="password" class="youpasswd" >Contraseña</label>
                                  
-                                  <input data-rule-required="true"  class="textbox"  type="password" name="password" id="password" tabindex="2" placeholder="Password" />
+<!--                                   <input data-rule-required="true"  class="textbox"  type="password" name="password" id="password" tabindex="2" placeholder="Password" /> -->
+                                  <form:password id="password" data-rule-required="true" path="password" size="30" maxlength="30" showPassword = "true" tabindex="2" placeholder="Password" /> 
+                                  
                                 </p>
+                                
+                                
                                 <p class="keeplogin">
                                     <input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
                                     <label for="loginkeeping">Olvidaste tu contraseña?</label>
@@ -64,8 +69,8 @@ color: red;
                                 </p>
                                 <p class="login button">
                                    
-                                    <input type="button"  value="Entrar" id="logearse"  class="form-control btn btn-register"   />
-                                  
+                                    <input type="submit"  value="Entrar" id="logearse"  class="form-control btn btn-register"   />
+<!--                                   <input type="submit" class="blue-button" /> -->
                                    
                                 </p>
                                 <p style="width: 350px" class="change_link">
@@ -73,7 +78,7 @@ color: red;
                                     Luego da clic en "Entrar" o presione "Enter".
 
                                 </p>
-                       </form>
+                      </form:form>
                         </div>
                        
                     </div>
@@ -93,22 +98,23 @@ color: red;
      <script type="text/javascript"  src="<c:url value="/resources/Scripts/app/js/jquery.master.js" />"></script>
 
 <script type="text/javascript">
-$('#logearse').click(function() {
+// $('#logearse').click(function() {
 	
 	
-	if (jQuery.fn.MasterMainPage("fn_IsFormValid", $("#login-form"))) {
+// 	if (jQuery.fn.MasterMainPage("fn_IsFormValid", $("#login-form"))) {
 		
-		window.location='./citas'; 
+// 		window.location='./citas'; 
 		
-	}
-	else {
+// 	}
+// 	else {
 	
 		
-	jQuery.fn.MasterMainPage("messagealert", "warning");
+// 	jQuery.fn.MasterMainPage("messagealert", "warning");
 	
 
-	}
+// 	}
 
-});</script>
+// });
+</script>
 </body>
 </html>

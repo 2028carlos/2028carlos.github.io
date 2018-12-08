@@ -33,9 +33,9 @@
 		<beans:property name="annotatedClasses">
 			<beans:list>
 <!-- 				<beans:value>edu.pe.cibertec.spring.model.Person</beans:value> -->
-<beans:value>edu.pe.cibertec.spring.model.Roles</beans:value> 
-<beans:value>edu.pe.cibertec.spring.model.Itinerario</beans:value> 
-
+<!-- <beans:value>edu.pe.cibertec.spring.model.Roles</beans:value>  -->
+<!-- <beans:value>edu.pe.cibertec.spring.model.Itinerario</beans:value>  -->
+<beans:value>edu.pe.cibertec.spring.model.Usuario</beans:value> 
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
